@@ -1,16 +1,18 @@
 import streamlit as st
 import base64
 
-page_bg_img = 
-<style>
-body {
-background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
-background-size: cover;
-}
-</style>
-
-
-st.markdown(page_bg_img, unsafe_allow_html=True)
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: url('https://media.istockphoto.com/id/1310618429/photo/price-of-btc-is-going-to-breakout.jpg?s=612x612&w=0&k=20&c=46lAhJApOlBF32MEZskG8E1HO18JDDLyRPfg9NX_KoE=');
+        background-size: cover;
+        background-position: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 st.subheader('📈 Recurrent Neural Network (RNN)')
 
