@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title('Stock Price LSTM')
+st.subheader('📈 Recurrent Neural Network (RNN)')
 
 st.info('This application uses the Long short-term memory (LSTM) to determine stock price.')
 
