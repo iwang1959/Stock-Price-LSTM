@@ -2,7 +2,7 @@ import streamlit as st
 
 st.title('Stock Price LSTM')
 
-st.write('This application uses the Long short-term memory (LSTM) to determine stock price.')
+st.info('This application uses the Long short-term memory (LSTM) to determine stock price.')
 
 st.write('RECURRENT NEURAL NETWORK')
 
