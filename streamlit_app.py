@@ -1,19 +1,16 @@
 import streamlit as st
 import base64
 
-main_bg = "stockbg.jpg"
-main_bg_ext = "jpg"
+page_bg_img = '''
+<style>
+body {
+background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
+background-size: cover;
+}
+</style>
+'''
 
-st.markdown(
-    f"""
-    <style>
-    .reportview-container {{
-        background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(main_bg, "rb").read()).decode()})
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown(page_bg_img, unsafe_allow_html=True)
 
 st.subheader('📈 Recurrent Neural Network (RNN)')
 
