@@ -1,5 +1,19 @@
 import streamlit as st
 
+st.markdown(
+    """
+    <style>
+    .reportview-container {
+        background: url("https://www.istockphoto.com/photos/epic-stock")
+    }
+   .sidebar .sidebar-content {
+        background: url("url_goes_here")
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.subheader('📈 Recurrent Neural Network (RNN)')
 
 st.info('This application uses the Long short-term memory (LSTM) to determine stock price.')
