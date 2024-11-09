@@ -5,7 +5,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-image: url('https://media.istockphoto.com/id/1310618429/photo/price-of-btc-is-going-to-breakout.jpg?s=612x612&w=0&k=20&c=46lAhJApOlBF32MEZskG8E1HO18JDDLyRPfg9NX_KoE=');
+        background-image: url('https://wallpapers.com/images/hd/stock-market-drastic-market-movement-baglidta60etpuu7.jpg');
         background-size: cover;
         background-position: center;
     }
