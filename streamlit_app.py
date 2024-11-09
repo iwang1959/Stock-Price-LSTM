@@ -6,12 +6,13 @@ st.info('This application uses the Long short-term memory (LSTM) to determine st
 
 st.write('RECURRENT NEURAL NETWORK')
 
-st.write('It is one of the oldest networks which was created in the year the 1980s, which has recently became popular due to highly generated data and high computation power of computers.')
+st.markdown("""
+<u>Key Features of RNN:</u>
 
-st.write('The main uses of RNN is for sequence and time series data')
-
-st.write('RNN is one of the most powerful algorithms where it has internal memory to store previous data. One of the main features of RNN is that the internal memory helps to remeber important things and this allows the computer to make predictions on what comes next.')
-
-st.write('RNN is a feedback neutral network where it has self-loops at the hidden layer.')
-
-st.write('One drawback of this algorithm is that RNN has short-term memory which stores only short span of information.')
+- One of the oldest neural network architectures, developed in the 1980s.
+- Recently became popular due to the availability of large datasets and increased computational power.
+- Primarily used for **sequence** and **time series data**.
+- RNNs have internal memory, allowing them to store information from previous steps in the sequence.
+- The internal memory helps the network make predictions based on historical data.
+- RNNs are **feedback neural networks**, with self-loops at the hidden layer.
+""", unsafe_allow_html=True)
