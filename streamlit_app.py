@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.markdown(
-    """
+
     <style>
     .reportview-container {
         background: url("https://www.istockphoto.com/photos/epic-stock")
@@ -10,7 +10,7 @@ st.markdown(
         background: url("url_goes_here")
     }
     </style>
-    """,
+,
     unsafe_allow_html=True
 )
 
