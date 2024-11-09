@@ -46,4 +46,4 @@ st.markdown("""
 
 with st.expander("Fix Random Seed For Reproducibility"):
 # fix random seed for reproducibility
-tf.random.set_seed(7)
+    tf.random.set_seed(7)
