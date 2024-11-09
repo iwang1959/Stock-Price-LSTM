@@ -43,3 +43,7 @@ st.markdown("""
 - The internal memory helps the network make predictions based on historical data.
 - RNNs are **feedback neural networks**, with self-loops at the hidden layer.
 """, unsafe_allow_html=True)
+
+with st.expander("Fix Random Seed For Reproducibility"):
+# fix random seed for reproducibility
+tf.random.set_seed(7)
