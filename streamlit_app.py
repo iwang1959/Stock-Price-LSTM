@@ -10,6 +10,9 @@ from tensorflow.keras.layers import LSTM
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 
+
+
+
 st.markdown(
     """
     <style>
@@ -46,4 +49,42 @@ st.markdown("""
 
 with st.expander("Fix Random Seed For Reproducibility"):
 # fix random seed for reproducibility
+    st.write('**Process**')
     tf.random.set_seed(7)
+
+
+with st.expander("Get Stock Data"):
+    # fix random seed for reproducibility
+    tf.random.set_seed(7)
+
+    # Define the stock ticker and load the data
+    ticker = input('Enter stock ticker:')
+    data = yf.download(ticker, start='2010-01-01', end='2024-01-01')
+
+    # Use the 'Close' price for prediction
+    df = data[['Close']]
+
+    dataset = df.values
+    dataset = dataset.astype('float32')
+
+    # normalize the dataset
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    dataset = scaler.fit_transform(dataset)
+
+    # split into train and test sets
+    train_size = int(len(dataset) * 0.67)
+    test_size = len(dataset) - train_size
+    train, test = dataset[0:train_size,:], dataset[train_size:len(dataset),:]
+
+
+    # convert an array of values into a dataset matrix
+    def create_dataset(dataset, look_back=1):
+        dataX, dataY = [], []
+        for i in range(len(dataset)-look_back-1):
+            a = dataset[i:(i+look_back), 0]
+            dataX.append(a)
+            dataY.append(dataset[i + look_back, 0])
+        return np.array(dataX), np.array(dataY)
+
+
+    create_dataset(dataset)
