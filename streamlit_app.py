@@ -19,12 +19,11 @@ if ticker:
     try:
         data = yf.download(ticker, start='2010-01-01', end='2024-01-01')
 
-        # Check if data is retrieved
-        if not data.empty:
-            st.write(f"Data for {ticker}:")
-            st.dataframe(data.tail())
+        # Display the data to debug
+        st.write(data.head())  # Show the first few rows to check if 'Close' is available
 
-            # Use the 'Close' price for prediction
+        # Check if the 'Close' column exists
+        if 'Close' in data.columns:
             df = data[['Close']]
 
             # Plot the closing price
@@ -72,9 +71,8 @@ if ticker:
 
             # Display the first 5 predictions
             st.write("First 5 Predictions:", predicted_prices[:5].flatten())
-
         else:
-            st.error("No data found for the given ticker. Please try a different one.")
+            st.error(f"Data for ticker {ticker} does not contain 'Close' column. Please check the ticker.")
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
