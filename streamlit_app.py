@@ -8,6 +8,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM
 from sklearn.preprocessing import MinMaxScaler
+from tensorflow.keras.models import load_model
 from sklearn.metrics import mean_squared_error
 
 
@@ -53,38 +54,55 @@ with st.expander("Fix Random Seed For Reproducibility"):
     tf.random.set_seed(7)
 
 
-with st.expander("Get Stock Data"):
-    # fix random seed for reproducibility
-    tf.random.set_seed(7)
+# Load the saved LSTM model
+@st.cache_resource
+def load_lstm_model():
+    model = load_model('lstm_model.weights.h5')
+    return model
 
-    # Define the stock ticker and load the data
-    ticker = input('Enter stock ticker:')
-    data = yf.download(ticker, start='2010-01-01', end='2024-01-01')
+model = load_lstm_model()
 
-    # Use the 'Close' price for prediction
-    df = data[['Close']]
-
-    dataset = df.values
-    dataset = dataset.astype('float32')
-
-    # normalize the dataset
+# Function to make predictions
+def make_predictions(input_data, look_back=1):
+    # Load the scaler used during training
     scaler = MinMaxScaler(feature_range=(0, 1))
-    dataset = scaler.fit_transform(dataset)
+    input_data = scaler.fit_transform(input_data)
 
-    # split into train and test sets
-    train_size = int(len(dataset) * 0.67)
-    test_size = len(dataset) - train_size
-    train, test = dataset[0:train_size,:], dataset[train_size:len(dataset),:]
+    # Prepare the data for the LSTM model
+    dataX = []
+    for i in range(len(input_data) - look_back - 1):
+        dataX.append(input_data[i:(i + look_back), 0])
+    dataX = np.array(dataX)
+    dataX = np.reshape(dataX, (dataX.shape[0], dataX.shape[1], 1))
 
+    # Make predictions
+    predictions = model.predict(dataX)
+    predictions = scaler.inverse_transform(predictions)
+    return predictions
 
-    # convert an array of values into a dataset matrix
-    def create_dataset(dataset, look_back=1):
-        dataX, dataY = [], []
-        for i in range(len(dataset)-look_back-1):
-            a = dataset[i:(i+look_back), 0]
-            dataX.append(a)
-            dataY.append(dataset[i + look_back, 0])
-        return np.array(dataX), np.array(dataY)
+# Streamlit UI
+st.title('Stock Price Prediction using LSTM')
+st.write('This app uses a pre-trained LSTM model to predict stock prices.')
 
+# File upload for input data
+uploaded_file = st.file_uploader("Upload your stock data (CSV file)", type=["csv"])
 
-    create_dataset(dataset)
+if uploaded_file is not None:
+    # Read the CSV file
+    data = pd.read_csv(uploaded_file)
+    st.write("Uploaded Data:")
+    st.dataframe(data.head())
+
+    # Ensure the data is in the correct format
+    if 'Close' in data.columns:
+        # Prepare the input data (using 'Close' prices)
+        input_data = data[['Close']].values
+
+        # Make predictions
+        predictions = make_predictions(input_data)
+
+        # Display predictions
+        st.write("Predicted Prices:")
+        st.line_chart(predictions)
+    else:
+        st.error("The uploaded CSV file must contain a 'Close' column for stock prices.")
